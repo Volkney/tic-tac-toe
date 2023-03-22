@@ -1,42 +1,30 @@
 const player1choice = document.querySelectorAll('.choice1');
 const choiceDisplay = document.getElementById('choice-display');
 
-const getPlayerChoice = function(){
-player1choice.forEach(boton => {
-  boton.addEventListener('click', e => {
-    let player1Symbol = e.target.value;
-    console.log(player1Symbol);
-    let player2Symbol = '';
-    if(player1Symbol === 'x'){
-    	player1choice[1].disabled = true;
-      player2Symbol = 'o'
-    }
-    else{
-    	player1choice[0].disabled = true;
-       player2Symbol = 'x';
-    }
-    choiceDisplay.innerText = `Player 1 is ${player1Symbol.toUpperCase()} and player 2 ${player2Symbol.toUpperCase()}`;
-  	});
-	});
-};
-getPlayerChoice();
 
-function createPlayer(playerName, chosenSymbol){
-  player = {
-    playerName: playerName,
-    chosenSymbol: chosenSymbol,
-    displayInfo: function(){
-      return console.log(`$(this.playerName) chose $(chosenSymbol)`);
-    }
-  }
-  return {player};
+function createGetPlayerChoice(player1choice, choiceDisplay) {
+  return function() {
+    player1choice.forEach(boton => {
+      boton.addEventListener('click', e => {
+        let player1Symbol = e.target.value;
+        let player2Symbol = '';
+        if(player1Symbol === 'x'){
+          player1choice[1].disabled = true;
+          player2Symbol = 'o'
+        }
+        else{
+          player1choice[0].disabled = true;
+           player2Symbol = 'x';
+        }
+        choiceDisplay.innerText = `Player 1 is ${player1Symbol.toUpperCase()} and player 2 ${player2Symbol.toUpperCase()}`;
+      });
+    });
+  };
 }
 
-//var player1 = createPlayer("John", "X");
-//var player2 = createPlayer("Jane", "O");
+const getPlayerChoice = createGetPlayerChoice(player1choice, choiceDisplay);
+getPlayerChoice();
 
-//player1.player.displayInfo(); // Outputs "John chose X"
-//player2.player.displayInfo(); // Outputs "Jane chose O"
 
 //gameboard module
 
@@ -45,9 +33,9 @@ const gameBoard = (() =>{
            '', '', '',
            '', '', '']
   
-  getBoard = () => board;
+  let getBoard = () => board;
   
-  resetBoard = () => board = ['', '', '',
+  let resetBoard = () => board = ['', '', '',
                               '', '', '',
                               '', '', '']
    const updateBoard = (index, chosenSymbol) => {
