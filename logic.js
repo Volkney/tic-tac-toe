@@ -1,5 +1,4 @@
 const player1choice = document.querySelectorAll('.choice1');
-const player2choice = document.querySelectorAll('.choice2');
 const choiceDisplay = document.getElementById('choice-display');
 
 const getPlayerChoice = function(){
@@ -10,12 +9,10 @@ player1choice.forEach(boton => {
     let player2Symbol = '';
     if(player1Symbol === 'x'){
     	player1choice[1].disabled = true;
-      player2choice[0].disabled = true;
       player2Symbol = 'o'
     }
     else{
     	player1choice[0].disabled = true;
-      player2choice[1].disabled = true;
        player2Symbol = 'x';
     }
     choiceDisplay.innerText = `Player 1 is ${player1Symbol.toUpperCase()} and player 2 ${player2Symbol.toUpperCase()}`;
