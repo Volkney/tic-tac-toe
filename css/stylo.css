@@ -1,4 +1,7 @@
-
+:root{
+    --gray: #D5CACB;
+    --blue: #0030BA;
+}
 html, body{
     height: 100vh;
     width: 100vw;
@@ -6,21 +9,29 @@ html, body{
 body{
     display: flex;
     justify-content: center;
+    flex-direction: column;
     gap: 4rem;
 }
 *{
-    background-color: gray;
+    background-color: var(--gray);
 }
 
-.board-container{
+.board-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
-    grid-template-rows: repeat(3, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    grid-template-rows: repeat(3, minmax(100px, 1fr));
+    grid-gap: 10px;
     margin-top: 2rem;
+    border: 1px solid black;
+    padding: 1rem;
+    width: 650px;
+    height: 60%;
+    overflow: auto;
   }
   
   .index{
-    border: 1px solid red;
+    
+    border: 1px solid var(--blue);
   }
 
   .index:nth-child(-n + 3){

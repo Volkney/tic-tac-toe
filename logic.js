@@ -1,78 +1,88 @@
 const player1choice = document.querySelectorAll('.choice1');
 const choiceDisplay = document.getElementById('choice-display');
 
-
-function createGetPlayerChoice(player1choice, choiceDisplay) {
-  return function() {
-    player1choice.forEach(boton => {
-      boton.addEventListener('click', e => {
-        let player1Symbol = e.target.value;
-        let player2Symbol = '';
-        if(player1Symbol === 'x'){
-          player1choice[1].disabled = true;
-          player2Symbol = 'o'
-        }
-        else{
-          player1choice[0].disabled = true;
-           player2Symbol = 'x';
-        }
-        choiceDisplay.innerText = `Player 1 is ${player1Symbol.toUpperCase()} and player 2 ${player2Symbol.toUpperCase()}`;
-      });
-    });
+const getPlayerChoice = function(){
+  const players = {
+    player1: {
+      symbol: '',
+    },
+    player2: {
+      symbol: '',
+    },
   };
-}
 
-const getPlayerChoice = createGetPlayerChoice(player1choice, choiceDisplay);
+  const setPlayerSymbols = function(player1Symbol) {
+    players.player1.symbol = player1Symbol;
+    if(player1Symbol === 'x'){
+      player1choice[1].disabled = true;
+      players.player2.symbol = 'o';
+    }
+    else{
+      player1choice[0].disabled = true;
+      players.player2.symbol = 'x';
+    }
+    choiceDisplay.innerText = `Player 1 is ${players.player1.symbol.toUpperCase()} and player 2 ${players.player2.symbol.toUpperCase()}`;
+  };
+
+  const getPlayer1Symbol = function() {
+    return players.player1.symbol;
+  };
+
+  const getPlayer2Symbol = function() {
+    return players.player2.symbol;
+  };
+
+  const getPlayers = function() {
+    return players;
+  };
+
+  player1choice.forEach(boton => {
+    boton.addEventListener('click', e => {
+      setPlayerSymbols(e.target.value);
+    });
+  });
+
+  return {
+    getPlayers,
+    getPlayer1Symbol,
+    getPlayer2Symbol,
+  };
+};
+
+
+
+
 getPlayerChoice();
 
-
-//gameboard module
-
-const gameBoard = (() =>{
-  board = ['', '', '',
-           '', '', '',
-           '', '', '']
-  
-  let getBoard = () => board;
-  
-  let resetBoard = () => board = ['', '', '',
-                              '', '', '',
-                              '', '', '']
-   const updateBoard = (index, chosenSymbol) => {
-    board[index] = symbol;
-  };
-  const winningCombos = [      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-  const checkWin = (symbol) =>{
-  for (let i = 0; i < winningCombos.length; i++) {
-      const [a, b, c] = winningCombos[i];
-      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return board[a];
+const gameLogic = (gameboard, getPlayers, getPlayer1Symbol, getPlayer2Symbol) => {
+  const game = getPlayerChoice();
+    console.log(game.getPlayers()); // logs the players object
+    console.log(game.getPlayer1Symbol()); // logs the symbol of player 1
+    console.log(game.getPlayer2Symbol()); // logs the symbol of player 2
+    // Variable to keep track of current player
+    let currentPlayer = game.getPlayer1Symbol();
+    // Function to switch to the other player
+    const switchPlayer = () => {
+      if (currentPlayer === game.getPlayer1Symbol) {
+        currentPlayer = game.getPlayer2Symbol;
+      } else {
+        currentPlayer = game.getPlayer1Symbol;
       }
-    }
+    };
+    
+  
+    boardIndex = document.querySelectorAll('.index');
+  function getIndexClicked() {
+    boardIndex.forEach(i => {
+      i.addEventListener('click', e => {
+        const indexValue = e.target.dataset.value;
+        console.log(indexValue);
+        i.innerText = game.getPlayer1Symbol();
+        switchPlayer();
+      });
+    });
   }
-});
 
-const gameLogic = (gameboard, player1, player2) => {
-  
-  // Variable to keep track of current player
-  let currentPlayer = player1;
-  
-  // Function to switch to the other player
-  const switchPlayer = () => {
-  if (currentPlayer === player1) {
-    currentPlayer = player2;
-  } else {
-    currentPlayer = player1;
-  }
-};
   
   // Function to handle a player's move
   const makeMove = (index) => {
@@ -107,9 +117,4 @@ const gameLogic = (gameboard, player1, player2) => {
   
   return { makeMove };
 };
-
-
-
-
-
-
+gameLogic();
