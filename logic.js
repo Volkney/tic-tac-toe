@@ -12,12 +12,27 @@ function createPlayers(symbol, playerNumber){
   }
 }
 
-function gameBoard(player1, player2){
-  //some code
-  console.log(player1, player2);
-  console.log(player1.logValue(), player2.logValue());
+  const boardGrid = document.querySelectorAll('.index');
 
-}
+  const boardModule = (function(){ 
+    //first method
+    function displayPlayersInfo(player1, player2){
+      console.log(player1.logValue(), player2.logValue());
+      }
+    //second method
+    function board(){
+      boardGrid.forEach(element => {
+        element.addEventListener('click', e => {
+          clickedGrid = e.target.dataset.value;
+          console.log(clickedGrid);
+        });
+        return{board};
+      });
+    }
+    return{displayPlayersInfo, board};
+  })();
+
+
 
 function getPlayersChoice(){
   playerChoice.forEach( choice =>{
@@ -33,7 +48,8 @@ function getPlayersChoice(){
         player1 = createPlayers('x', 'player1');
         playerChoice[0].disabled = true; 
       }
-      gameBoard(player1, player2);
+      boardModule.displayPlayersInfo(player1, player2);
+      boardModule.board(); // Call the board function here
     });
   });
 }
