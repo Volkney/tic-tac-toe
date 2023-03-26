@@ -91,29 +91,37 @@ const Player = (symbol, playerNumber, player1, player2) => {
         // declare the winner
         console.log(`Player ${currentPlayer.getNumber()} wins!`);
         winnerDisplay.textContent = `Player ${currentPlayer.getNumber()} wins!`;
-        choiceDisplay.remove();
+        choiceDisplay.style.display = 'none';
         gameEnded = true;
         return;
       }
     }
     movesMade++;
-    if (movesMade === 9) {
+    function checkForTie() {
+      for (let i = 0; i < cells.length; i++) {
+        if (cells[i].textContent === "") {
+          return false;
+        }
+      }
       console.log(`Nobody wins!`);
       winnerDisplay.textContent = `Nobody wins!`;
       choiceDisplay.remove();
       gameEnded = true;
-      return;
+      return true;
     }
   };
 
 
   //fifth module
-  const resetBoard = () => {
+  const resetBoard = (board) => {
     playAgain.addEventListener('click', () => {
+      
       // clear the board
       indices.forEach(element => {
         element.textContent = '';
       });
+      // clear the board
+      board = getBoard();
       // clear the winner display
       winnerDisplay.textContent = '';
       // enable the player choice buttons
@@ -121,7 +129,7 @@ const Player = (symbol, playerNumber, player1, player2) => {
         choice.disabled = false;
       });
       // reset the current player display
-      choiceDisplay.textContent = '';
+      choiceDisplay.textContent = 'Choose X or O to start the game';
       //reset moves
       movesMade = 0;
       // reset the gameEnded variable
@@ -169,10 +177,8 @@ function getPlayersChoice() {
         player2.Game(player1, player2); // call Game function with player1 and player2 objects as arguments
         playerChoice[0].disabled = true;
       }
-
       // display the current player and their symbol
       choiceDisplay.textContent = `Current Player: ${player1.getNumber()} with ${player1.getSymbol()}`;
-
       return { player1, player2 };
     });
   });
