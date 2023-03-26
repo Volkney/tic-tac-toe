@@ -32,6 +32,9 @@ body{
   .index{
     
     border: 1px solid var(--blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .index:nth-child(-n + 3){
