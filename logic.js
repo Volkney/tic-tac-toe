@@ -1,6 +1,7 @@
 const playerChoice = document.querySelectorAll('.choice1');
 const choiceDisplay = document.getElementById('choice-display');
 const winnerDisplay = document.getElementById('winner-display');
+const playAgain = document.getElementById('play-again');
 const container = document.querySelector('.board-container'); // get the container element
 const indices = container.querySelectorAll('.index'); // get all the index elements inside the container
 let gameEnded = false;
@@ -12,19 +13,17 @@ const Player = (symbol, playerNumber, player1, player2) => {
 
   const Game = ((player1, player2) => {
     let currentPlayer = player1;
-    
-    console.log('me working');//checks if Game module is being called
-
-    
+    // add a variable to keep track of the number of moves made
+    let movesMade = 0;
+    //first module
     const getBoard = () => {
-      
       const indexValues = [];
       indices.forEach(index => {
         indexValues.push(index.getAttribute('data-value'));
       });
       return indexValues;
     };
-
+    //second module
     const switchPlayers = () => {
       if(!player1 || !player2) {
         return console.log('player not defined'); // players not yet defined
@@ -37,7 +36,7 @@ const Player = (symbol, playerNumber, player1, player2) => {
         choiceDisplay.textContent = `Current Player: ${currentPlayer.getNumber()}`;
       }
     };
-
+    //third module
     const updateBoard = () => {
       gameEnded = false;
       if (!player1 || !player2) {
@@ -65,13 +64,13 @@ const Player = (symbol, playerNumber, player1, player2) => {
             }
           };
           element.addEventListener('click', handleClick);
-          
         });
-        
       }
-      
     };
-  //second module
+  //fourth module
+
+
+  // modify checkWin function to check for a tie
   const checkWin = (board) => {
     const winningIndices = [
       // horizontal
@@ -86,25 +85,52 @@ const Player = (symbol, playerNumber, player1, player2) => {
       [0, 4, 8],
       [2, 4, 6]
     ];
-    
-   
-      for (let i = 0; i < winningIndices.length; i++) {
-        
-        const [a, b, c] = winningIndices[i];
-        
-        
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-          // declare the winner
-          console.log(`Player ${currentPlayer.getNumber()} wins!`);
-          winnerDisplay.textContent = `Player ${currentPlayer.getNumber()} wins!`;
-          choiceDisplay.remove();
-          gameEnded = true;
-          break;
-        }
+    for (let i = 0; i < winningIndices.length; i++) {
+      const [a, b, c] = winningIndices[i];
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        // declare the winner
+        console.log(`Player ${currentPlayer.getNumber()} wins!`);
+        winnerDisplay.textContent = `Player ${currentPlayer.getNumber()} wins!`;
+        choiceDisplay.remove();
+        gameEnded = true;
+        return;
       }
+    }
+    movesMade++;
+    if (movesMade === 9) {
+      console.log(`Nobody wins!`);
+      winnerDisplay.textContent = `Nobody wins!`;
+      choiceDisplay.remove();
+      gameEnded = true;
+      return;
+    }
   };
-  
+
+
+  //fifth module
+  const resetBoard = () => {
+    playAgain.addEventListener('click', () => {
+      // clear the board
+      indices.forEach(element => {
+        element.textContent = '';
+      });
+      // clear the winner display
+      winnerDisplay.textContent = '';
+      // enable the player choice buttons
+      playerChoice.forEach(choice => {
+        choice.disabled = false;
+      });
+      // reset the current player display
+      choiceDisplay.textContent = '';
+      //reset moves
+      movesMade = 0;
+      // reset the gameEnded variable
+      gameEnded = false;
+    });
+  };
+
   updateBoard();  //for this to run the whole modules
+  resetBoard();
   
   return {
     getBoard,
