@@ -24,7 +24,7 @@
 
 
 ## Live Demo
-https://volkney.github.io/library-of-babel/
+https://volkney.github.io/tic-tac-toe/
 
 
 
