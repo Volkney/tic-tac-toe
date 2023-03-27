@@ -10,7 +10,7 @@ let gameEnded = false;
 const Player = (symbol, playerNumber, player1, player2) => {
   const getSymbol = () => symbol;
   const getNumber = () => playerNumber;
-
+  //factory function
   const Game = ((player1, player2) => {
     let currentPlayer = player1;
     // add a variable to keep track of the number of moves made
@@ -46,18 +46,14 @@ const Player = (symbol, playerNumber, player1, player2) => {
         indices.forEach(element => {
           const handleClick = (e) => {
             const clickedGrid = e.target.dataset.value;
-            
             if (!gameEnded) {
-              for (let i = 0; i < board.length; i++) {
-                
+              for (let i = 0; i < board.length; i++) {              
                 if (clickedGrid === board[i] && indices[i].textContent === '') {
                   console.log(`this is clicknumber ${i}`);//this could be use as a turn counter
                   indices[i].textContent = currentPlayer.getSymbol();
                   board[i] = currentPlayer.getSymbol();
-                  console.log(board);
-                  
+                  console.log(board); 
                   checkWin(board);
-                  
                   switchPlayers();
                 }  
               }           
@@ -97,31 +93,37 @@ const Player = (symbol, playerNumber, player1, player2) => {
       }
     }
     movesMade++;
-    function checkForTie() {
-      for (let i = 0; i < cells.length; i++) {
-        if (cells[i].textContent === "") {
-          return false;
-        }
-      }
+    if (movesMade === 9) {
+      checkForTie(board); // call checkForTie function
+    }
+  };
+  //fifth module
+  const checkForTie = (board) => {
+    if (!board.includes('')) {
       console.log(`Nobody wins!`);
       winnerDisplay.textContent = `Nobody wins!`;
       choiceDisplay.remove();
       gameEnded = true;
       return true;
     }
+    return false;
   };
 
-
-  //fifth module
+  //sixth module
   const resetBoard = (board) => {
     playAgain.addEventListener('click', () => {
-      
+      // clear the board
+      board = getBoard();
+
       // clear the board
       indices.forEach(element => {
         element.textContent = '';
       });
       // clear the board
-      board = getBoard();
+      board.forEach(element => {
+        board.textContent = '';
+      });
+      
       // clear the winner display
       winnerDisplay.textContent = '';
       // enable the player choice buttons
@@ -139,7 +141,7 @@ const Player = (symbol, playerNumber, player1, player2) => {
 
   updateBoard();  //for this to run the whole modules
   resetBoard();
-  
+  //checkForTie();
   return {
     getBoard,
     checkWin,
@@ -157,7 +159,7 @@ const Player = (symbol, playerNumber, player1, player2) => {
   };
 };
 
-
+//checks for parameters to feed information into the facotry function
 function getPlayersChoice() {
   let player1;
   let player2;
