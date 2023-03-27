@@ -1,8 +1,10 @@
 :root{
+    --black: #292929;
     --gray: #D5CACB;
     --blue: #BAC5C8;
     --yellow: #FDEAC9; 
     --green: #D0DFD9;
+    --dark-green: #67786E;
     --red: #F2BDB2;
     --grey-bg: #BDC8C7;
     --shadow-color: 156deg 9% 38%;
@@ -20,6 +22,12 @@
       -33.3px 44.3px 68.2px -1.1px hsl(var(--shadow-color) / 0.68),
       -58.7px 78.1px 120.2px -1.4px hsl(var(--shadow-color) / 0.74),
       -99.3px 132px 203.2px -1.8px hsl(var(--shadow-color) / 0.8);
+    --text-shadow-color: 0 1px 2px #687973,
+    -1px 3px 1px #687973, 
+    -2px 4px 1px #687973, 
+    -3px 5px 1px #687973, 
+    -4px 7px 1px #687973;
+   
 }
 html, body{
     height: 100vh;
@@ -31,9 +39,7 @@ body{
     justify-content: center;
     align-items: center;
     gap: 4rem;
-}
-*{
-    background-color: var(--gray);
+    width: 100%;
 }
 
 .central-container{
@@ -43,7 +49,7 @@ body{
     align-items: center;
     background-color: var(--green);
     padding: 25px 15px;
-    width: 50vw;
+    width: clamp(20vw, 35vw, 38vw);
     height: 80vh;
     border-radius: 30px;
     box-shadow: var(--shadow-elevation-medium);
@@ -51,6 +57,9 @@ body{
 
 .choice-container{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 .choice-container>*{
     background-color: var(--green);
@@ -61,7 +70,6 @@ body{
     grid-template-columns: repeat(3, minmax(150px, 1fr));
     grid-template-rows: repeat(3, minmax(100px, 1fr));
     margin-top: 2rem;
-    width: 35vw;
     height: 60%;
     padding: 5rem 1px;
     background-color: var(--green);
@@ -76,9 +84,13 @@ body{
     background-color: var(--green);
     padding: 2rem;
     border-radius: 40%;
-    width: 5rem;
     transition: all ease 0.2s;
-    font-size:;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 800;
+    font-size: 5em;
+    text-align: center;
+    color: var(--red);
+    text-shadow: var(--text-shadow-color);
   }
 
 
@@ -87,7 +99,6 @@ body{
     box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
   }
   .index:nth-child(2n):hover{
-    border-right: none;
     background-color: var(--yellow);
     transform: translateY(5px);
     box-shadow: 
@@ -97,9 +108,37 @@ body{
   .index:not(:nth-child(2n)) {
     background-color: var(--blue);
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
-} 
-.index:not(:nth-child(2n)):hover {
-    background-color: var(--blue);
-    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.5);
-} 
+    } 
+    .index:not(:nth-child(2n)):hover {
+        background-color: var(--blue);
+        transform: translateY(-5px);
+        box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.5);
+    } 
 
+.button-container{
+    display: flex;
+    gap: 2px;
+}
+.button {
+    border: 2px solid var(--dark-green);
+    border-radius: 15px;
+    padding: 1rem 2rem;
+    background-color: var(--green);
+    color: var(--black);
+    transition: all ease 0.2s;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+    .button:hover{
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-elevation-low);
+    }
+#play-again{
+    background-color: var(--red);
+}
+
+label{
+    font-family: 'Noto Sans', sans-serif;
+    padding: 1rem;
+    color: var(--dark-green);
+}

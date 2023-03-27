@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/stylo.css">
     <title>Document</title>
@@ -14,12 +15,18 @@
 
     <div class="central-container">
         <div class="choice-container">
-                <button id="play-again">Play Again</button><br>
-                <label>Player One Symbol:</label><br>
-                <button value='x' class='choice1'>X</button>
-                <button value='o' class='choice1'>O</button><br>
-                <label id='choice-display'></label>
+
+            <div class="button-container">
+                <button id="play-again" class="button">Play Again</button><br>
+                <button value='X' class='choice1 button'>X</button>
+                <button value='O' class='choice1 button'>O</button><br>
+            </div>
+            
+                <label id='choice-display'>Please Select a Symbol</label>
                 <label id='winner-display'></label>
+            
+                
+
         </div>
             
 
