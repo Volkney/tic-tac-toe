@@ -87,7 +87,7 @@ const Player = (symbol, playerNumber, player1, player2) => {
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         // declare the winner
         console.log(`${currentPlayer.getNumber()} wins!`);
-        winnerDisplay.textContent = `${currentPlayer.getNumber()} wins!`;
+        winnerDisplay.textContent = `${currentPlayer.getSymbol()} wins!`;
         choiceDisplay.style.display = 'none';
         gameEnded = true;
         return;
